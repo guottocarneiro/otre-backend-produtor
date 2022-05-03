@@ -3,6 +3,7 @@ package com.pucminas.otre.otreprodutor.controller;
 import com.pucminas.otre.otreprodutor.dto.ProdutorDto;
 import com.pucminas.otre.otreprodutor.service.ProdutorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class ProdutorController {
 
     private final ProdutorService produtorService;
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity criarProdutor(@RequestBody ProdutorDto produtor) {
         var produtorCriado = produtorService.criarProdutor(produtor);
         if(produtorCriado.isPresent()) {
@@ -28,7 +29,7 @@ public class ProdutorController {
         }
     }
 
-    @PostMapping(path = "/login")
+    @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestBody ProdutorDto produtor) {
         var produtorLogado = produtorService.login(produtor);
         if(produtorLogado.isPresent()) {
