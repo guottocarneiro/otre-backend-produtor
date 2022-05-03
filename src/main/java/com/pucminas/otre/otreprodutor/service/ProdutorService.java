@@ -16,8 +16,13 @@ public class ProdutorService {
 
     public Optional<Produtor> criarProdutor(ProdutorDto produtorDto) {
         var produtorToBeCreated = produtorDto.converter();
-        var produtor = produtorRepository.save(produtorToBeCreated);
-        return Optional.of(produtor);
+        var checarProdutor = produtorRepository.findByEmailAndSenha(produtorDto.getEmail(), produtorDto.getSenha());
+        if(checarProdutor == null) {
+            var produtor = produtorRepository.save(produtorToBeCreated);
+            return Optional.of(produtor);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<Produtor> login(ProdutorDto produtorDto) {

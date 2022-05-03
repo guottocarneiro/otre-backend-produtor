@@ -4,12 +4,10 @@ import com.pucminas.otre.otreprodutor.dto.ProdutorDto;
 import com.pucminas.otre.otreprodutor.service.ProdutorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(ProdutorController.BASE_PATH)
 @RequiredArgsConstructor
 public class ProdutorController {
@@ -22,7 +20,9 @@ public class ProdutorController {
     public ResponseEntity criarProdutor(@RequestBody ProdutorDto produtor) {
         var produtorCriado = produtorService.criarProdutor(produtor);
         if(produtorCriado.isPresent()) {
-            return ResponseEntity.of(produtorCriado);
+            var retornoProdutor = produtorCriado.get();
+            retornoProdutor.setSenha("");
+            return ResponseEntity.ok(retornoProdutor);
         } else {
             return ResponseEntity.internalServerError().build();
         }
@@ -32,7 +32,9 @@ public class ProdutorController {
     public ResponseEntity login(@RequestBody ProdutorDto produtor) {
         var produtorLogado = produtorService.login(produtor);
         if(produtorLogado.isPresent()) {
-            return ResponseEntity.of(produtorLogado);
+            var retornoProdutor = produtorLogado.get();
+            retornoProdutor.setSenha("");
+            return ResponseEntity.ok(retornoProdutor);
         } else {
             return ResponseEntity.notFound().build();
         }
