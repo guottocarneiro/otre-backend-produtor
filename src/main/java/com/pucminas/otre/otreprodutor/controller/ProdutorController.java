@@ -37,8 +37,7 @@ public class ProdutorController {
             retornoProdutor.setSenha("");
             return ResponseEntity.ok(retornoProdutor);
         } else {
-            return ResponseEntity.ok("Deu errado");
+            return ResponseEntity.notFound().build();
         }
     }
-
 }
